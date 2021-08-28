@@ -1,0 +1,1777 @@
+
+{
+    "type": "DECLARATION",
+    "left": {
+        "fun": {
+            "type": "IDENTIFIER",
+            "value": "main"
+        },
+        "params": []
+    },
+    "right": {
+        "type": "FUNCTION_CALL",
+        "left": {
+            "type": "IDENTIFIER",
+            "value": "deploy"
+        },
+        "right": {
+            "type": "FUNCTION_CALL",
+            "left": {
+                "type": "IDENTIFIER",
+                "value": "Contract"
+            },
+            "right": [
+                {
+                    "type": "TUPLE",
+                    "value": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "constructor"
+                        },
+                        {
+                            "type": "FUNCTION_CALL",
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "ITuple3"
+                            },
+                            "right": [
+                                {
+                                    "type": "TUPLE",
+                                    "value": [
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "IString"
+                                        },
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "IString"
+                                        },
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "IInt"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "IDENTIFIER",
+                    "value": "update"
+                }
+            ]
+        }
+    }
+}
+{
+    "type": "TYPE_ALIAS_DECLARATION",
+    "left": {
+        "fun": {
+            "type": "IDENTIFIER",
+            "value": "Model"
+        },
+        "params": []
+    },
+    "right": [
+        {
+            "type": "RECORD",
+            "values": [
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "balances"
+                    },
+                    "value": [
+                        {
+                            "type": "FUNCTION_CALL",
+                            "fun": {
+                                "type": "IDENTIFIER",
+                                "value": "Mapping"
+                            },
+                            "param": [
+                                {
+                                    "type": "IDENTIFIER",
+                                    "value": "Address"
+                                },
+                                {
+                                    "type": "IDENTIFIER",
+                                    "value": "Int"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "allowances"
+                    },
+                    "value": [
+                        {
+                            "type": "FUNCTION_CALL",
+                            "fun": {
+                                "type": "IDENTIFIER",
+                                "value": "Mapping"
+                            },
+                            "param": [
+                                {
+                                    "type": "IDENTIFIER",
+                                    "value": "Address"
+                                },
+                                [
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "fun": {
+                                            "type": "IDENTIFIER",
+                                            "value": "Mapping"
+                                        },
+                                        "param": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "Address"
+                                            },
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "Int"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "totalSupply"
+                    },
+                    "value": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Int"
+                        }
+                    ]
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "name"
+                    },
+                    "value": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "String"
+                        }
+                    ]
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "symbol"
+                    },
+                    "value": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "String"
+                        }
+                    ]
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "decimals"
+                    },
+                    "value": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Int"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+{
+    "type": "DECLARATION",
+    "left": {
+        "fun": {
+            "type": "IDENTIFIER",
+            "value": "constructor"
+        },
+        "params": [
+            {
+                "type": "IDENTIFIER",
+                "value": "global"
+            },
+            {
+                "type": "IDENTIFIER",
+                "value": "params"
+            }
+        ]
+    },
+    "right": {
+        "type": "SCOPE",
+        "declarations": [
+            {
+                "left": [
+                    {
+                        "type": "IDENTIFIER",
+                        "value": "name"
+                    },
+                    {
+                        "type": "IDENTIFIER",
+                        "value": "symbol"
+                    },
+                    {
+                        "type": "IDENTIFIER",
+                        "value": "totalSupply"
+                    }
+                ],
+                "right": {
+                    "type": "CASE",
+                    "condition": {
+                        "type": "IDENTIFIER",
+                        "value": "params"
+                    },
+                    "branches": [
+                        {
+                            "type": "BRANCH",
+                            "match": {
+                                "fun": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Tuple3"
+                                },
+                                "param": [
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "RString"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "n"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "RString"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "s"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "RInt"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "ts"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "statement": {
+                                "type": "TUPLE",
+                                "value": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "n"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "s"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "ts"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "BRANCH",
+                            "match": "_",
+                            "statement": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "throw"
+                                },
+                                "right": [
+                                    {
+                                        "type": "APPEND",
+                                        "left": {
+                                            "type": "STRING",
+                                            "value": "$STRING_LITERAL$",
+                                            "position": "0"
+                                        },
+                                        "right": {
+                                            "type": "STRING",
+                                            "value": "$STRING_LITERAL$",
+                                            "position": "1"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "statement": {
+            "type": "RECORD",
+            "update": null,
+            "values": [
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "balances"
+                    },
+                    "value": {
+                        "type": "FUNCTION_CALL",
+                        "left": {
+                            "type": "IDENTIFIER",
+                            "value": "Mapping.insert"
+                        },
+                        "right": [
+                            {
+                                "type": "IDENTIFIER",
+                                "value": "global.msg.sender"
+                            },
+                            {
+                                "type": "IDENTIFIER",
+                                "value": "totalSupply"
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.empty"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "Default.int"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "allowances"
+                    },
+                    "value": {
+                        "type": "FUNCTION_CALL",
+                        "left": {
+                            "type": "IDENTIFIER",
+                            "value": "Mapping.empty"
+                        },
+                        "right": [
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.empty"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "Default.int"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "totalSupply"
+                    },
+                    "value": {
+                        "type": "IDENTIFIER",
+                        "value": "totalSupply"
+                    }
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "name"
+                    },
+                    "value": {
+                        "type": "IDENTIFIER",
+                        "value": "name"
+                    }
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "symbol"
+                    },
+                    "value": {
+                        "type": "IDENTIFIER",
+                        "value": "symbol"
+                    }
+                },
+                {
+                    "key": {
+                        "type": "IDENTIFIER",
+                        "value": "decimals"
+                    },
+                    "value": {
+                        "type": "PRODUCT",
+                        "leftSignal": null,
+                        "operation": "*",
+                        "left": {
+                            "type": "EXPOENT",
+                            "left": {
+                                "type": "LITERAL",
+                                "value": "2.5"
+                            },
+                            "right": {
+                                "type": "LITERAL",
+                                "value": "-1"
+                            }
+                        },
+                        "right": {
+                            "type": "LITERAL",
+                            "value": "2"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
+{
+    "type": "TYPE_DECLARATION",
+    "left": {
+        "type": "IDENTIFIER",
+        "value": "Msg"
+    },
+    "right": [
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "BalanceOf"
+            },
+            "statements": [
+                {
+                    "id": {
+                        "type": "IDENTIFIER",
+                        "value": "Address"
+                    },
+                    "statements": []
+                }
+            ]
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "Transfer"
+            },
+            "statements": [
+                {
+                    "id": {
+                        "type": "IDENTIFIER",
+                        "value": "Address"
+                    },
+                    "statements": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Int"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "GetAllowance"
+            },
+            "statements": [
+                {
+                    "id": {
+                        "type": "IDENTIFIER",
+                        "value": "Address"
+                    },
+                    "statements": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Address"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "Approve"
+            },
+            "statements": [
+                {
+                    "id": {
+                        "type": "IDENTIFIER",
+                        "value": "Address"
+                    },
+                    "statements": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Int"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "TransferFrom"
+            },
+            "statements": [
+                {
+                    "id": {
+                        "type": "IDENTIFIER",
+                        "value": "Address"
+                    },
+                    "statements": [
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Address"
+                        },
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "Int"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "GetName"
+            }
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "GetSymbol"
+            }
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "GetDecimals"
+            }
+        },
+        {
+            "id": {
+                "type": "IDENTIFIER",
+                "value": "GetTotalSupply"
+            }
+        }
+    ]
+}
+{
+    "type": "DECLARATION",
+    "left": {
+        "fun": {
+            "type": "IDENTIFIER",
+            "value": "update"
+        },
+        "params": [
+            {
+                "type": "IDENTIFIER",
+                "value": "msg"
+            },
+            {
+                "type": "IDENTIFIER",
+                "value": "global"
+            },
+            {
+                "type": "IDENTIFIER",
+                "value": "model"
+            }
+        ]
+    },
+    "right": {
+        "type": "CASE",
+        "condition": {
+            "type": "IDENTIFIER",
+            "value": "msg"
+        },
+        "branches": [
+            {
+                "type": "BRANCH",
+                "match": {
+                    "fun": {
+                        "type": "IDENTIFIER",
+                        "value": "BalanceOf"
+                    },
+                    "param": {
+                        "type": "IDENTIFIER",
+                        "value": "address"
+                    }
+                },
+                "statement": {
+                    "type": "SCOPE",
+                    "declarations": [
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "balance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "address"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.balances"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "statement": {
+                        "type": "TUPLE",
+                        "value": [
+                            {
+                                "type": "ARRAY",
+                                "value": null
+                            },
+                            {
+                                "type": "IDENTIFIER",
+                                "value": "model"
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Single"
+                                },
+                                "right": {
+                                    "type": "FUNCTION_CALL",
+                                    "left": {
+                                        "type": "IDENTIFIER",
+                                        "value": "RInt"
+                                    },
+                                    "right": [
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "balance"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "fun": {
+                        "type": "IDENTIFIER",
+                        "value": "Transfer"
+                    },
+                    "param": {
+                        "fun": {
+                            "type": "IDENTIFIER",
+                            "value": "address"
+                        },
+                        "param": {
+                            "type": "IDENTIFIER",
+                            "value": "amount"
+                        }
+                    }
+                },
+                "statement": {
+                    "type": "SCOPE",
+                    "declarations": [
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "senderBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "global.msg.sender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.balances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "updatedBalances"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.insert"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "global.msg.sender"
+                                    },
+                                    {
+                                        "type": "SUM",
+                                        "operation": "-",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "senderBalance"
+                                        },
+                                        "right": {
+                                            "type": "IDENTIFIER",
+                                            "value": "amount"
+                                        }
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.balances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "recipientBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "address"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "updatedBalances"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "statement": {
+                        "type": "TUPLE",
+                        "value": [
+                            {
+                                "type": "ARRAY",
+                                "value": [
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "global.msg.sender"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "address"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "3"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": ">=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "senderBalance"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "amount"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "4"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "RECORD",
+                                "update": {
+                                    "type": "IDENTIFIER",
+                                    "value": "model"
+                                },
+                                "values": [
+                                    {
+                                        "key": {
+                                            "type": "IDENTIFIER",
+                                            "value": "balances"
+                                        },
+                                        "value": {
+                                            "type": "FUNCTION_CALL",
+                                            "left": {
+                                                "type": "IDENTIFIER",
+                                                "value": "Mapping.insert"
+                                            },
+                                            "right": [
+                                                {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "address"
+                                                },
+                                                {
+                                                    "type": "SUM",
+                                                    "operation": "+",
+                                                    "left": {
+                                                        "type": "IDENTIFIER",
+                                                        "value": "recipientBalance"
+                                                    },
+                                                    "right": {
+                                                        "type": "IDENTIFIER",
+                                                        "value": "amount"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "updatedBalances"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Single"
+                                },
+                                "right": {
+                                    "type": "FUNCTION_CALL",
+                                    "left": {
+                                        "type": "IDENTIFIER",
+                                        "value": "RBool"
+                                    },
+                                    "right": [
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "True"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "fun": {
+                        "type": "IDENTIFIER",
+                        "value": "GetAllowance"
+                    },
+                    "param": {
+                        "fun": {
+                            "type": "IDENTIFIER",
+                            "value": "owner"
+                        },
+                        "param": {
+                            "type": "IDENTIFIER",
+                            "value": "spender"
+                        }
+                    }
+                },
+                "statement": {
+                    "type": "SCOPE",
+                    "declarations": [
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowancesMapping"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "owner"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.allowances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowedBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "spender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "allowancesMapping"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "statement": {
+                        "type": "TUPLE",
+                        "value": [
+                            {
+                                "type": "ARRAY",
+                                "value": null
+                            },
+                            {
+                                "type": "IDENTIFIER",
+                                "value": "model"
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Single"
+                                },
+                                "right": [
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "RInt"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "allowedBalance"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "fun": {
+                        "type": "IDENTIFIER",
+                        "value": "Approve"
+                    },
+                    "param": {
+                        "fun": {
+                            "type": "IDENTIFIER",
+                            "value": "spender"
+                        },
+                        "param": {
+                            "type": "IDENTIFIER",
+                            "value": "amount"
+                        }
+                    }
+                },
+                "statement": {
+                    "type": "SCOPE",
+                    "declarations": [
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowancesMapping"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "global.msg.sender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.allowances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowances"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.insert"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "global.msg.sender"
+                                    },
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "Mapping.insert"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "spender"
+                                            },
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "amount"
+                                            },
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "allowancesMapping"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.allowances"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "statement": {
+                        "type": "TUPLE",
+                        "value": [
+                            {
+                                "type": "ARRAY",
+                                "value": [
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "global.msg.sender"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "5"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "spender"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "6"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "RECORD",
+                                "update": {
+                                    "type": "IDENTIFIER",
+                                    "value": "model"
+                                },
+                                "values": [
+                                    {
+                                        "key": {
+                                            "type": "IDENTIFIER",
+                                            "value": "allowances"
+                                        },
+                                        "value": {
+                                            "type": "IDENTIFIER",
+                                            "value": "allowances"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Single"
+                                },
+                                "right": {
+                                    "type": "FUNCTION_CALL",
+                                    "left": {
+                                        "type": "IDENTIFIER",
+                                        "value": "RBool"
+                                    },
+                                    "right": [
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "True"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "fun": {
+                        "type": "IDENTIFIER",
+                        "value": "TransferFrom"
+                    },
+                    "param": {
+                        "fun": {
+                            "type": "IDENTIFIER",
+                            "value": "sender"
+                        },
+                        "param": {
+                            "fun": {
+                                "type": "IDENTIFIER",
+                                "value": "recipient"
+                            },
+                            "param": {
+                                "type": "IDENTIFIER",
+                                "value": "amount"
+                            }
+                        }
+                    }
+                },
+                "statement": {
+                    "type": "SCOPE",
+                    "declarations": [
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "senderBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "sender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.balances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "updatedBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.insert"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "sender"
+                                    },
+                                    {
+                                        "type": "SUM",
+                                        "operation": "-",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "senderBalance"
+                                        },
+                                        "right": {
+                                            "type": "IDENTIFIER",
+                                            "value": "amount"
+                                        }
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.balances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "recipientBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "recipient"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "updatedBalance"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowancesMapping"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "sender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.allowances"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowedBalance"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.get"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "global.msg.sender"
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "allowancesMapping"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "allowances"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Mapping.insert"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "sender"
+                                    },
+                                    {
+                                        "type": "FUNCTION_CALL",
+                                        "left": {
+                                            "type": "IDENTIFIER",
+                                            "value": "Mapping.insert"
+                                        },
+                                        "right": [
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "global.msg.sender"
+                                            },
+                                            {
+                                                "type": "SUM",
+                                                "operation": "-",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "allowedBalance"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "amount"
+                                                }
+                                            },
+                                            {
+                                                "type": "IDENTIFIER",
+                                                "value": "allowancesMapping"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.allowances"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "statement": {
+                        "type": "TUPLE",
+                        "value": [
+                            {
+                                "type": "ARRAY",
+                                "value": [
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "sender"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "7"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": "/=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "recipient"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "zeroAddress"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "8"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": ">=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "senderBalance"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "amount"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "9"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "TUPLE",
+                                        "value": [
+                                            {
+                                                "type": "COMPARATOR",
+                                                "comparator": ">=",
+                                                "left": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "allowedBalance"
+                                                },
+                                                "right": {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "amount"
+                                                }
+                                            },
+                                            {
+                                                "type": "STRING",
+                                                "value": "$STRING_LITERAL$",
+                                                "position": "10"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "RECORD",
+                                "update": {
+                                    "type": "IDENTIFIER",
+                                    "value": "model"
+                                },
+                                "values": [
+                                    {
+                                        "key": {
+                                            "type": "IDENTIFIER",
+                                            "value": "allowances"
+                                        },
+                                        "value": {
+                                            "type": "IDENTIFIER",
+                                            "value": "allowances"
+                                        }
+                                    },
+                                    {
+                                        "key": {
+                                            "type": "IDENTIFIER",
+                                            "value": "balances"
+                                        },
+                                        "value": {
+                                            "type": "FUNCTION_CALL",
+                                            "left": {
+                                                "type": "IDENTIFIER",
+                                                "value": "Mapping.insert"
+                                            },
+                                            "right": [
+                                                {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "recipient"
+                                                },
+                                                {
+                                                    "type": "SUM",
+                                                    "operation": "+",
+                                                    "left": {
+                                                        "type": "IDENTIFIER",
+                                                        "value": "recipientBalance"
+                                                    },
+                                                    "right": {
+                                                        "type": "IDENTIFIER",
+                                                        "value": "amount"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "IDENTIFIER",
+                                                    "value": "updatedBalance"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "Single"
+                                },
+                                "right": {
+                                    "type": "FUNCTION_CALL",
+                                    "left": {
+                                        "type": "IDENTIFIER",
+                                        "value": "RBool"
+                                    },
+                                    "right": [
+                                        {
+                                            "type": "IDENTIFIER",
+                                            "value": "True"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "type": "IDENTIFIER",
+                    "value": "GetName"
+                },
+                "statement": {
+                    "type": "TUPLE",
+                    "value": [
+                        {
+                            "type": "ARRAY",
+                            "value": null
+                        },
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "model"
+                        },
+                        {
+                            "type": "FUNCTION_CALL",
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "Single"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "RString"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.name"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "type": "IDENTIFIER",
+                    "value": "GetSymbol"
+                },
+                "statement": {
+                    "type": "TUPLE",
+                    "value": [
+                        {
+                            "type": "ARRAY",
+                            "value": null
+                        },
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "model"
+                        },
+                        {
+                            "type": "FUNCTION_CALL",
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "Single"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "RString"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.symbol"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "type": "IDENTIFIER",
+                    "value": "GetDecimals"
+                },
+                "statement": {
+                    "type": "TUPLE",
+                    "value": [
+                        {
+                            "type": "ARRAY",
+                            "value": null
+                        },
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "model"
+                        },
+                        {
+                            "type": "FUNCTION_CALL",
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "Single"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "RInt"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.decimals"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "BRANCH",
+                "match": {
+                    "type": "IDENTIFIER",
+                    "value": "GetTotalSupply"
+                },
+                "statement": {
+                    "type": "TUPLE",
+                    "value": [
+                        {
+                            "type": "ARRAY",
+                            "value": null
+                        },
+                        {
+                            "type": "IDENTIFIER",
+                            "value": "model"
+                        },
+                        {
+                            "type": "FUNCTION_CALL",
+                            "left": {
+                                "type": "IDENTIFIER",
+                                "value": "Single"
+                            },
+                            "right": {
+                                "type": "FUNCTION_CALL",
+                                "left": {
+                                    "type": "IDENTIFIER",
+                                    "value": "RInt"
+                                },
+                                "right": [
+                                    {
+                                        "type": "IDENTIFIER",
+                                        "value": "model.totalSupply"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
