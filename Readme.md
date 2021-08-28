@@ -1,5 +1,4 @@
 # Delm Compiler
-
 Delm-compiler is an **experimental** project trying to compile Elm to Solidity.
 
 _Delm aka Decentralized Elm._
@@ -20,7 +19,7 @@ Delm tries to leverage the best of both worlds.
 * Solidity security and tooling;
 * Elm debugging.
 
-## Installation
+<!-- ## Installation
 
 #### Installation - Linux, Mac OS
 
@@ -78,7 +77,7 @@ Run.
 ```
 
 Visit http://localhost:8000/index.html
-The interpreter will watch changes made to your contract. Refresh to see updates.
+The interpreter will watch changes made to your contract. Refresh to see updates. -->
 
 ## Examples
 
