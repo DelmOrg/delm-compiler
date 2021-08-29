@@ -1,3 +1,4 @@
+
 module Concept.Contract exposing (..)
 
 import Array exposing (Array)
@@ -696,3 +697,4 @@ anyInt =
 hexify : List Int -> String
 hexify l =
     String.concat (List.map (Hex.toString >> String.padLeft 2 '0') l)
+

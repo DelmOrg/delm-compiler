@@ -1,9 +1,5 @@
-// clear && nearleyc grammar.ne -o grammar.ts && nearleyc type_grammar.ne -o type_grammar.ts && nearleyc type_alias_grammar.ne -o type_alias_grammar.ts &&
-// deno run --allow-read --allow-write delm-interpreter.ts ./Test.elm
-// deno compile --unstable --allow-read --allow-write --allow-run delm-interpreter.ts
-
-import { lexer, Token } from "./source-lexer.ts";
-import { parser as semiParser } from "./source-parser.ts";
+import { lexer, Token } from "./parser/source_lexer.ts";
+import { parser as semiParser } from "./parser/source_parser.ts";
 
 import {
   Contract,
@@ -11,7 +7,7 @@ import {
   DefaultValues,
   ElmJson,
   Mapping,
-} from "./delm-core.ts";
+} from "./codegen/delm_core.ts";
 
 import { assertEquals } from "https://deno.land/std@0.84.0/testing/asserts.ts";
 
@@ -22,9 +18,9 @@ import {
   Parser,
 } from "https://deno.land/x/nearley@2.19.7-deno/mod.ts";
 
-import compiledSrcGrammar from "./grammar.ts";
-import compiledTypeGrammar from "./type_grammar.ts";
-import compiledTypeAliasGrammar from "./type_alias_grammar.ts";
+import compiledSrcGrammar from "./grammar/dist/grammar.ts";
+import compiledTypeGrammar from "./grammar/dist/type_grammar.ts";
+import compiledTypeAliasGrammar from "./grammar/dist/type_alias_grammar.ts";
 
 const srcGrammar = Grammar.fromCompiled(compiledSrcGrammar);
 const typeGrammar = Grammar.fromCompiled(compiledTypeGrammar);
@@ -48,6 +44,8 @@ if (command === "init") {
   await Deno.writeTextFile(`elm.json`, ElmJson);
   Deno.exit(0);
 } else if (command !== "run") throw new Error(`Unkown command ${command}`)
+
+if (!filename) throw new Error("No filename provided");
 
 let [packageName] = filename.match(/(\w+).elm$/) || [""];
 packageName = packageName.split(".")[0];
@@ -262,7 +260,8 @@ const run = async () => {
         ? paramEncode
         : "None"
     } ) ->` + "\n";
-    paramEncode += "\t\t" + `${node.id.value} ${variables.join(" ")}` +
+    const variable = variables.length ? ` ${variables.join(" ")}` : "";
+    paramEncode += "\t\t" + `${node.id.value}${variable}` +
       "\n";
     encode += paramEncode + "\n";
   }
