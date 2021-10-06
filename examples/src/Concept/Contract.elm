@@ -1,3 +1,4 @@
+
 module Concept.Contract exposing (..)
 
 import Array exposing (Array)
@@ -100,7 +101,7 @@ type Msg
 
 
 deploy : Contract msg model -> Program () model msg
-deploy contract =
+deploy _ =
     throw "Please, don't run this directly."
 
 
@@ -353,19 +354,28 @@ panel contract model =
     column
         [ height fill
         , Element.width <| fill
-        , Background.color <| Element.rgb255 165 139 244
+        -- , Background.color <| Element.rgb255 165 139 244
+        , Background.gradient <|
+            { angle = pi
+            , steps =
+                [ Element.rgb255 13 17 38
+                , Element.rgb255 22 20 52
+                , Element.rgb255 27 21 62
+                , Element.rgb255 48 23 72
+                ]
+            }
         , Font.color <| Element.rgb255 255 255 255
         , spacing 10
         , padding 30
         ]
-        [ Element.text "running..."
-        , Input.button
-            [ Background.color (Element.rgb255 120 80 255)
+        -- [ Element.text "running..."
+        [ Input.button
+            [ Background.color (Element.rgb255 141 221 219)
             , padding 10
             ]
             { onPress = Just GenerateNewAddress
             , label =
-                text "new address"
+                text "New Address"
             }
         , viewAddresses model
         , constructorForm model ( "constructor", Signature constructorParams INone )
@@ -391,10 +401,10 @@ viewAddresses model =
                 row [ Element.width fill ]
                     [ Input.button
                         [ if k /= sender then
-                            Background.color (Element.rgb255 0 80 255)
+                            Background.color (Element.rgba255 0 0 0 0)
 
                           else
-                            Background.color (Element.rgb255 138 238 138)
+                            Background.color (Element.rgb255 226 26 123)
                         ]
                         { onPress =
                             if k /= sender then
@@ -687,3 +697,4 @@ anyInt =
 hexify : List Int -> String
 hexify l =
     String.concat (List.map (Hex.toString >> String.padLeft 2 '0') l)
+

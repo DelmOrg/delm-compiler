@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+deno compile -A --unstable delm_interpreter.ts

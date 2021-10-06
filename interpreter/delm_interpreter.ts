@@ -1,13 +1,11 @@
 import { lexer, Token } from "./parser/source_lexer.ts";
 import { parser as semiParser } from "./parser/source_parser.ts";
 
-import {
-  Contract,
-  Core,
-  DefaultValues,
-  ElmJson,
-  Mapping,
-} from "./codegen/delm_core.ts";
+import { Core } from './codegen/core/Core.ts'
+import { Contract } from './codegen/core/Contract.ts'
+import { DefaultValues } from './codegen/core/DefaultValues.ts'
+import { Mapping } from './codegen/core/Mapping.ts'
+import { ElmJson } from './codegen/core/elm.json.ts'
 
 import { assertEquals } from "https://deno.land/std@0.84.0/testing/asserts.ts";
 
