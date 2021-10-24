@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-deno run --allow-run "$(dirname "$0")/run.ts";
-
 deno run -A --unstable delm_interpreter.ts run $1

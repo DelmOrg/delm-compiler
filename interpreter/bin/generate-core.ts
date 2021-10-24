@@ -1,31 +1,23 @@
-async function generateElmFile(name: string) {
-  const file = await Deno.readTextFile(`../examples/src/Concept/${name}.elm`);
 
-  await Deno.writeTextFile(
-    `codegen/core/${name}.ts`,
-    `
-export const ${name} = \`
-${file.replaceAll("\\", "\\\\")}
-\`;
-`,
-  );
+async function compileGrammar(name: string) {
+  const cmd = await Deno.run({
+    cwd: "./grammar",
+    cmd: [
+      "nearleyc",
+      `${name}.ne`,
+      "-o",
+      `dist/${name}.ts`,
+    ],
+    stdout: "piped",
+  });
+  const { success } = await cmd.status();
+  cmd.close();
+
+  if (!success) {
+    throw new Error("Compilation failed");
+  }
 }
 
-async function generateElmJsonFile() {
-  const file = await Deno.readTextFile(`../examples/elm.json`);
-
-  await Deno.writeTextFile(
-    `codegen/core/elm.json.ts`,
-    `
-export const ElmJson = \`
-    ${file}
-\`;
-`,
-  );
-}
-
-await generateElmFile("Core");
-await generateElmFile("Contract");
-await generateElmFile("DefaultValues");
-await generateElmFile("Mapping");
-await generateElmJsonFile();
+await compileGrammar("grammar");
+await compileGrammar("type_alias_grammar");
+await compileGrammar("type_grammar");

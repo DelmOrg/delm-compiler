@@ -2,4 +2,4 @@
 
 deno run --allow-run "$(dirname "$0")/bootstrap.ts";
 
-deno run -A --unstable delm_interpreter.ts init
+$(dirname "$0")/generate-core

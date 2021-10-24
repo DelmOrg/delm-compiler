@@ -1,15 +1,7 @@
 import { lexer, Token } from "./parser/source_lexer.ts";
 import { parser as semiParser } from "./parser/source_parser.ts";
 
-import { Core } from './codegen/core/Core.ts'
-import { Contract } from './codegen/core/Contract.ts'
-import { DefaultValues } from './codegen/core/DefaultValues.ts'
-import { Mapping } from './codegen/core/Mapping.ts'
-import { ElmJson } from './codegen/core/elm.json.ts'
-
 import { assertEquals } from "https://deno.land/std@0.84.0/testing/asserts.ts";
-
-import { emptyDir, ensureDir } from "https://deno.land/std@0.84.0/fs/mod.ts";
 
 import {
   Grammar,
@@ -27,21 +19,7 @@ const typeAliasGrammar = Grammar.fromCompiled(compiledTypeAliasGrammar);
 const command = Deno.args[0];
 const filename = Deno.args[1];
 
-if (command === "init") {
-  await ensureDir(`src/Concept`);
-  await emptyDir(`src/Concept`);
-
-  await Deno.writeTextFile(`src/Concept/Contract.elm`, Contract);
-  await Deno.writeTextFile(`src/Concept/Core.elm`, Core);
-  await Deno.writeTextFile(
-    `src/Concept/DefaultValues.elm`,
-    DefaultValues,
-  );
-  await Deno.writeTextFile(`src/Concept/Mapping.elm`, Mapping);
-
-  await Deno.writeTextFile(`elm.json`, ElmJson);
-  Deno.exit(0);
-} else if (command !== "run") throw new Error(`Unkown command ${command}`)
+if (command !== "run") throw new Error(`Unkown command ${command}`)
 
 if (!filename) throw new Error("No filename provided");
 
@@ -70,6 +48,10 @@ const run = async () => {
     out += "\n";
     out += JSON.stringify(results[0], null, 4);
 
+    /*
+      This assertion is very important.
+      Anything higher than 1 implies an ambiguous grammar and should be fixed.
+    */
     assertEquals(results.length, 1);
     const [tree] = results;
 
