@@ -48,7 +48,7 @@ STATEMENT -> LITERAL
 					{% ([p1, , v, , p2]) => { return v } %}
 
 				| IDENTIFIER EXPRESSIONS
-		
+
 					{% ([id, params]) => { return params.length > 0 ? [{ id, statements: params.reverse() }] : [{ id, statements: [] }] } %}
 
 
@@ -66,7 +66,7 @@ TUPLE -> __ STATEMENT _ "," __ S_STATEMENT _ "," __ S_STATEMENT __
 			{% ([_, [st1], , comma1, __, [st2], , comma2, ___, [st3]]) => [st1, st2, st3] %}
 
 		|  __ S_STATEMENT _ "," __ S_STATEMENT __
-		
+
 			{% ([_, [st1], __, comma1, , [st2]]) => [st1, st2] %}
 
 IDENTIFIER -> IDENTIFIER "." ID

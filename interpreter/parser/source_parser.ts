@@ -27,44 +27,6 @@ interface Token {
   symbol: string;
 }
 
-const keywords = [
-  "port",
-  "module",
-  "exposing",
-  "import",
-  "as",
-  "(..)",
-  "type",
-  "alias",
-  "case",
-  "of",
-  "_",
-  "->",
-  "let",
-  "in",
-];
-
-const operators = [
-  ">",
-  "<",
-  ">=",
-  "<=",
-  "&&",
-  "||",
-  "<|",
-  "|>",
-  ">>",
-  "<<",
-  "++",
-  "==",
-  "/=",
-  "+",
-  "-",
-  "*",
-  "/",
-  "//",
-  "^",
-];
 
 type Operator =
   | ">"

@@ -359,9 +359,6 @@ export function lexer(lines: string[]): [string[], Token[]] {
       const lastToken = tokens.length > 1
         ? tokens[tokens.length - 1].type
         : TokenType.keyword;
-      const tokenBeforeLastToken = tokens.length > 2
-        ? tokens[tokens.length - 2].type
-        : TokenType.keyword;
 
       if (
         tokens.length &&

@@ -22,13 +22,13 @@ const keywords = [
 %}
 
 DECLARATION -> FUNCTION_DELCARATION __ "=" __ S_STATEMENT
-	
+
 			{% ([dcl, _, eq, __, stm]) => { return { type: "DECLARATION", left: dcl, right: stm } } %}
 
 
 FUNCTION_DELCARATION -> ID_UNWRAPPED PARAMS
 
-			{% ([fun, params]) => { return { fun, params: params } } %}
+			{% ([fun, params]) => { return { function: fun, params: params } } %}
 
 
 PARAMS -> PARAMS __ ID_UNWRAPPED
@@ -51,11 +51,11 @@ EXPRESSIONS -> EXPRESSIONS __ (IDENTIFIER {% ([id]) => id %} | LITERAL {% ([id])
 
 
 S_STATEMENT -> 	STATEMENT
-			
+
 				{% ([n]) => n %}
 
 			| STATEMENT __ "<|" __ RIGHT_STATEMENT
-				
+
 				{% ([left, _1, pipe, _2, right]) => { return { type: 'FUNCTION_CALL', left, right }} %}
 
 			| LEFT_STATEMENT __ "|>" __ STATEMENT
@@ -67,18 +67,18 @@ S_STATEMENT -> 	STATEMENT
 				{% ([dcls, _, stm]) => { return { type: 'SCOPE', declarations: dcls, statement: stm }} %}
 
 			| CASE_OF
-			
+
 				{% ([n]) => n %}
 
 			| IF_ELSE
-			
+
 				{% ([n]) => n %}
 
 
 RIGHT_STATEMENT -> STATEMENT
 
 				{% ([n]) => n %}
-			
+
 			| STATEMENT __ "<|" __ RIGHT_STATEMENT
 
 				{% ([left, _1, pipe, _2, right]) => { return { type: 'FUNCTION_CALL', left, right }} %}
@@ -87,7 +87,7 @@ RIGHT_STATEMENT -> STATEMENT
 LEFT_STATEMENT -> STATEMENT
 
 				{% ([n]) => n %}
-			
+
 			| LEFT_STATEMENT __ "|>" __ STATEMENT
 
 				{% ([left, _1, pipe, _2, right]) => { return { type: 'FUNCTION_CALL', left, right }} %}
@@ -147,7 +147,7 @@ CASE_OF_BRANCH -> __ (CASE_OF_MATCH | "_") __ "->" __ S_STATEMENT (__ "\\n" | nu
 
 CASE_OF_MATCH -> ID_UNWRAPPED __ CASE_OF_MATCH
 
-		{% ([fun, _1, param]) => { return { fun, param } } %}
+		{% ([fun, _1, param]) => { return { branch: fun, param } } %}
 
 	| "(" TUPLE ")"
 
@@ -161,7 +161,7 @@ CASE_OF_MATCH -> ID_UNWRAPPED __ CASE_OF_MATCH
 
 
 CALL -> LITERAL
-			
+
 			{% ([n]) => [...n] %}
 
 	| IDENTIFIER EXPRESSIONS
@@ -170,9 +170,9 @@ CALL -> LITERAL
 
 
 LITERAL -> 	SUM
-			
+
 			{% n => n %}
-		
+
 		| "\"" _ "$STRING_LITERAL$" _ [0-9]:+ _ "\""
 
 			{% ([_, , v, , i, , __]) => { return [{ type: 'STRING', value: v, position: i.join("") }] } %}
@@ -219,11 +219,11 @@ TUPLE -> __ S_STATEMENT _ "," __ S_STATEMENT _ "," __ S_STATEMENT __
 			{% ([_, st1, __, comma1, , st2]) => [st1, st2] %}
 
 RECORD_DEFINITION -> __ ID_UNWRAPPED __ "=" __ S_STATEMENT _ "," RECORD_DEFINITION
-			
+
 			{% ([_, key, __, eq, ___, value, _e1, comma, values]) => { return [{ key, value }, ...values]} %}
 
 		| __ ID_UNWRAPPED __ "=" __ S_STATEMENT __
-			
+
 			{% ([_, key, __, eq, ___, value]) => { return [{ key, value }]} %}
 
 

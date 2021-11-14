@@ -61,7 +61,7 @@ STATEMENT -> LITERAL
 			{% ([_1, values, _2]) => { return [{ type: 'RECORD', values }] } %}
 
 		| IDENTIFIER EXPRESSIONS
-		
+
 			{% ([id, params]) => { return params.length > 0 ? [{ type: "FUNCTION_CALL", fun: id, param: params.reverse() }] : [id] } %}
 
 
@@ -88,11 +88,11 @@ TUPLE -> __ S_STATEMENT _ "," __ S_STATEMENT _ "," __ S_STATEMENT __
 			{% ([_, st1, __, comma1, , st2]) => [st1, st2] %}
 
 RECORD_DEFINITION -> __ ID_UNWRAPPED __ ":" __ S_STATEMENT _ "," RECORD_DEFINITION
-			
+
 			{% ([_, key, __, eq, ___, value, _e1, comma, values]) => { return [{ key, value }, ...values]} %}
 
 		| __ ID_UNWRAPPED __ ":" __ S_STATEMENT __
-			
+
 			{% ([_, key, __, eq, ___, value]) => { return [{ key, value }]} %}
 
 

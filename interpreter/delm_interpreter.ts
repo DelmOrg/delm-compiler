@@ -12,6 +12,8 @@ import compiledSrcGrammar from "./grammar/dist/grammar.ts";
 import compiledTypeGrammar from "./grammar/dist/type_grammar.ts";
 import compiledTypeAliasGrammar from "./grammar/dist/type_alias_grammar.ts";
 
+import { AstNode, NodeType } from "./parser/types.ts";
+
 const srcGrammar = Grammar.fromCompiled(compiledSrcGrammar);
 const typeGrammar = Grammar.fromCompiled(compiledTypeGrammar);
 const typeAliasGrammar = Grammar.fromCompiled(compiledTypeAliasGrammar);
@@ -39,26 +41,22 @@ const run = async () => {
   // TODO replace these back
   // console.log("string table: ", "|" + stringTable.join("|") + "|");
 
-  let out = "";
-  function runParser(parser: Parser, tokens: string): object {
+  function runParser(parser: Parser, tokens: string): AstNode {
     // console.log("====>", tokens);
 
     const { results } = parser.feed(tokens);
 
-    out += "\n";
-    out += JSON.stringify(results[0], null, 4);
-
     /*
-      This assertion is very important.
+      This assertion is important.
       Anything higher than 1 implies an ambiguous grammar and should be fixed.
     */
     assertEquals(results.length, 1);
     const [tree] = results;
 
-    return tree;
+    return tree as AstNode;
   }
 
-  const treeList = [];
+  const treeList: AstNode[] = [];
   for (let i = 0; i < semiTree.length; i++) {
     const nodes = semiTree[i];
 
@@ -95,24 +93,39 @@ const run = async () => {
       treeList.push(runParser(parser, t));
     }
   }
+  console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
+    JSON.stringify(treeList, null, 2));
 
   console.log("[META] output AST");
 
   let updateFunctionName = "", totalTypes = 0, signatureType;
   for (let i = 0; i < treeList.length; i++) {
-    const tree: any = treeList[i];
+    const tree = treeList[i];
     if (
-      tree.type === "DECLARATION" &&
-      tree.left?.fun?.type === "IDENTIFIER" &&
-      tree.left?.fun?.value === "main"
+      // tree.type === "DECLARATION" &&
+      tree.type === NodeType.DECLARATION &&
+      tree.left?.function?.type === NodeType.IDENTIFIER &&
+      tree.left?.function?.value === "main"
     ) {
-      const [, { value }] = tree?.right?.right?.right;
-      updateFunctionName = value;
+      // const [, { value }] = tree?.right?.right?.right;
+      // updateFunctionName = value;
+      let ast = tree?.right;
+      if (ast?.type === NodeType.FUNCTION_CALL && !Array.isArray(ast?.right)) {
+        ast = ast?.right;
+        if (
+          ast.type === NodeType.FUNCTION_CALL &&
+          Array.isArray(ast?.right) &&
+          ast.right[1]?.type === NodeType.IDENTIFIER
+        ) {
+          const [, { value }] = ast.right;
+          updateFunctionName = value;
+        }
+      }
     }
 
-    if (tree.type === "TYPE_DECLARATION") {
+    if (tree.type === NodeType.TYPE_DECLARATION) {
       totalTypes += 1;
-      signatureType = tree;
+      signatureType = tree as any; // TODO
     }
   }
   if (!updateFunctionName) {
@@ -129,8 +142,8 @@ const run = async () => {
     const tree: any = treeList[i];
     if (
       tree.type === "DECLARATION" &&
-      tree.left?.fun?.type === "IDENTIFIER" &&
-      tree.left?.fun?.value === updateFunctionName
+      tree.left?.function?.type === "IDENTIFIER" &&
+      tree.left?.function?.value === updateFunctionName
     ) {
       const { branches } = tree?.right;
       branches.map((branch: any) => {
@@ -147,8 +160,8 @@ const run = async () => {
         if (branch.match.value) {
           const { value } = branch.match;
           val = value;
-        } else if (branch.match.fun.value) {
-          const { value } = branch.match.fun;
+        } else if (branch.match.branch.value) {
+          const { value } = branch.match.branch;
           val = value;
         } else throw "Unexpected match value";
 
@@ -179,8 +192,8 @@ const run = async () => {
   encode += "encodeMsg toEncode =" + "\n";
   encode += "\t" + "case toEncode of" + "\n";
 
-  for (let i = 0; i < signatureType.right.length; i++) {
-    const node: any = signatureType.right[i];
+  for (let i = 0; i < signatureType?.right.length; i++) {
+    const node: any = signatureType?.right[i];
     let paramSig = "", paramEncode = "", variables: string[] = [];
 
     node.statements = node.statements ? node.statements : [];
