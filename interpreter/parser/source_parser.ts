@@ -1,3 +1,21 @@
+import { AstNode } from "./types.ts";
+import { lexer } from "../parser/source_lexer.ts";
+
+import {
+  Grammar,
+  Parser,
+} from "https://deno.land/x/nearley@2.19.7-deno/mod.ts";
+
+import { assertEquals } from "https://deno.land/std@0.84.0/testing/asserts.ts";
+
+import compiledSrcGrammar from "../grammar/dist/grammar.ts";
+import compiledTypeGrammar from "../grammar/dist/type_grammar.ts";
+import compiledTypeAliasGrammar from "../grammar/dist/type_alias_grammar.ts";
+
+const srcGrammar = Grammar.fromCompiled(compiledSrcGrammar);
+const typeGrammar = Grammar.fromCompiled(compiledTypeGrammar);
+const typeAliasGrammar = Grammar.fromCompiled(compiledTypeAliasGrammar);
+
 enum TokenType {
   whitespace = "WHITESPACE",
   keyword = "KEYWORD",
@@ -27,78 +45,7 @@ interface Token {
   symbol: string;
 }
 
-
-type Operator =
-  | ">"
-  | "<"
-  | ">="
-  | "<="
-  | "&&"
-  | "||"
-  | "<|"
-  | "|>"
-  | ">>"
-  | "<<"
-  | "++"
-  | "=="
-  | "/="
-  | "+"
-  | "-"
-  | "*"
-  | "/"
-  | "//"
-  | "^";
-
-// --------------
-
-interface LiteralNode {
-  type: "LiteralNode";
-  value: number | string;
-}
-
-interface TupleNode {
-  type: "TupleNode";
-  values: [AstNode, AstNode, AstNode?];
-}
-
-interface OperatorNode {
-  type: "OperatorNode";
-  operator: Operator;
-  left: AstNode;
-  right: AstNode;
-}
-
-interface CallNode {
-  type: "CallNode";
-  callee: Token;
-  parameters: AstNode[];
-}
-
-interface DeclarationNode {
-  type: "DeclarationNode";
-  callee: Token;
-  parameters: Token[];
-  body: AstNode;
-}
-
-interface DecisionNode {
-  type: "DecisionNode";
-  condition: AstNode;
-  branches: [[LiteralNode, AstNode]];
-}
-
-interface AstNode {
-  scope: Token[];
-  node:
-    | DeclarationNode
-    | CallNode
-    | DecisionNode
-    | OperatorNode
-    | TupleNode
-    | LiteralNode;
-}
-
-export function parser(tokens: Token[]): Token[][] {
+function internalParser(tokens: Token[]): Token[][] {
   const tree = [];
   let segmentStart = 0;
 
@@ -111,4 +58,71 @@ export function parser(tokens: Token[]): Token[][] {
   }
 
   return tree;
+}
+
+function runParser(parser: Parser, tokens: string): AstNode {
+  // console.log("====>", tokens);
+
+  const { results } = parser.feed(tokens);
+
+  /*
+    This assertion is important.
+    Anything higher than 1 implies an ambiguous grammar and should be fixed.
+  */
+  assertEquals(results.length, 1);
+  const [tree] = results;
+
+  return tree as AstNode;
+}
+
+export function parser(source: string): AstNode[] {
+  const lines = source.split("\n");
+
+  const segment: string[] = lines;
+
+  const [stringTable, tokens] = lexer(segment);
+  // TODO replace these back
+  // console.log("string table: ", "|" + stringTable.join("|") + "|");
+
+  const semiTree = internalParser(tokens);
+
+  const treeList: AstNode[] = [];
+  for (let i = 0; i < semiTree.length; i++) {
+    const nodes = semiTree[i];
+
+    const tokenz: string[] = nodes.map((node: Token) => node.symbol);
+
+    if (tokenz[0] === "module") continue;
+    if (tokenz[0] === "import") continue;
+
+    if (tokenz[0] === "type") {
+      if (tokenz[2] === "alias") {
+        // console.log("type alias");
+
+        const parser = new Parser(typeAliasGrammar);
+
+        const t = tokenz.join("");
+
+        treeList.push(runParser(parser, t));
+      } else {
+        // console.log("type");
+
+        const parser = new Parser(typeGrammar);
+
+        const t = tokenz.join("");
+
+        treeList.push(runParser(parser, t));
+      }
+    } else {
+      // console.log("source");
+
+      const parser = new Parser(srcGrammar);
+
+      const t = tokenz.join("");
+
+      treeList.push(runParser(parser, t));
+    }
+  }
+
+  return treeList;
 }

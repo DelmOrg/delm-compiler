@@ -1,22 +1,6 @@
-import { lexer, Token } from "./parser/source_lexer.ts";
-import { parser as semiParser } from "./parser/source_parser.ts";
+import { parser } from "./parser/source_parser.ts";
 
-import { assertEquals } from "https://deno.land/std@0.84.0/testing/asserts.ts";
-
-import {
-  Grammar,
-  Parser,
-} from "https://deno.land/x/nearley@2.19.7-deno/mod.ts";
-
-import compiledSrcGrammar from "./grammar/dist/grammar.ts";
-import compiledTypeGrammar from "./grammar/dist/type_grammar.ts";
-import compiledTypeAliasGrammar from "./grammar/dist/type_alias_grammar.ts";
-
-import { AstNode, NodeType } from "./parser/types.ts";
-
-const srcGrammar = Grammar.fromCompiled(compiledSrcGrammar);
-const typeGrammar = Grammar.fromCompiled(compiledTypeGrammar);
-const typeAliasGrammar = Grammar.fromCompiled(compiledTypeAliasGrammar);
+import { NodeType } from "./parser/types.ts";
 
 const command = Deno.args[0];
 const filename = Deno.args[1];
@@ -30,71 +14,10 @@ packageName = packageName.split(".")[0];
 
 const run = async () => {
   const source = await Deno.readTextFile(`./src/${packageName}/${filename}`);
-  const lines = source.split("\n");
+  const treeList = parser(source);
 
-  const segment: string[] = lines;
-
-  const [stringTable, tokens] = lexer(segment);
-
-  const semiTree = semiParser(tokens);
-
-  // TODO replace these back
-  // console.log("string table: ", "|" + stringTable.join("|") + "|");
-
-  function runParser(parser: Parser, tokens: string): AstNode {
-    // console.log("====>", tokens);
-
-    const { results } = parser.feed(tokens);
-
-    /*
-      This assertion is important.
-      Anything higher than 1 implies an ambiguous grammar and should be fixed.
-    */
-    assertEquals(results.length, 1);
-    const [tree] = results;
-
-    return tree as AstNode;
-  }
-
-  const treeList: AstNode[] = [];
-  for (let i = 0; i < semiTree.length; i++) {
-    const nodes = semiTree[i];
-
-    const tokenz: string[] = nodes.map((node: Token) => node.symbol);
-
-    if (tokenz[0] === "module") continue;
-    if (tokenz[0] === "import") continue;
-
-    if (tokenz[0] === "type") {
-      if (tokenz[2] === "alias") {
-        // console.log("type alias");
-
-        const parser = new Parser(typeAliasGrammar);
-
-        const t = tokenz.join("");
-
-        treeList.push(runParser(parser, t));
-      } else {
-        // console.log("type");
-
-        const parser = new Parser(typeGrammar);
-
-        const t = tokenz.join("");
-
-        treeList.push(runParser(parser, t));
-      }
-    } else {
-      // console.log("source");
-
-      const parser = new Parser(srcGrammar);
-
-      const t = tokenz.join("");
-
-      treeList.push(runParser(parser, t));
-    }
-  }
-  console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
-    JSON.stringify(treeList, null, 2));
+  // console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
+  //   JSON.stringify(treeList, null, 2));
 
   console.log("[META] output AST");
 
@@ -102,7 +25,6 @@ const run = async () => {
   for (let i = 0; i < treeList.length; i++) {
     const tree = treeList[i];
     if (
-      // tree.type === "DECLARATION" &&
       tree.type === NodeType.DECLARATION &&
       tree.left?.function?.type === NodeType.IDENTIFIER &&
       tree.left?.function?.value === "main"
