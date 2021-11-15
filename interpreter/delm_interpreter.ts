@@ -1,5 +1,5 @@
 import { parser } from "./parser/source_parser.ts";
-import { NodeType } from "./parser/types.ts";
+import { NodeType, AstNode, BranchNode } from "./parser/types.ts";
 import { extractUpdate } from "./ast/extractors.ts";
 
 const command = Deno.args[0];
@@ -20,35 +20,42 @@ const run = async () => {
     sourceSignatures,
   );
 
-  // console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
-  //   JSON.stringify(treeList, null, 2));
-
-  console.log("[META] output AST");
-
+  // TODO continue here
+  // const returnMap: Record<string, AstNode | undefined> = {};
   const returnMap: any = {};
   for (let i = 0; i < treeList.length; i++) {
-    const tree: any = treeList[i];
+    const tree: AstNode = treeList[i];
     if (
-      tree.type === "DECLARATION" &&
-      tree.left?.function?.type === "IDENTIFIER" &&
-      tree.left?.function?.value === updateFunctionName
+      tree.type === NodeType.DECLARATION &&
+      tree.left?.function?.type === NodeType.IDENTIFIER &&
+      tree.left?.function?.value === updateFunctionName &&
+      tree.right?.type === NodeType.CASE
     ) {
       const { branches } = tree?.right;
-      branches.map((branch: any) => {
+      branches.map((branch: BranchNode) => {
         let retrn;
-        if (branch.statement?.value) {
+        if (
+          branch.statement?.type === NodeType.TUPLE &&
+          branch.statement?.value) {
           const [, , r] = branch.statement.value;
           retrn = r;
-        } else if (branch.statement?.statement?.value) {
+        } else if (
+          branch.statement?.type === NodeType.SCOPE &&
+          branch.statement?.statement.type === NodeType.TUPLE &&
+          branch.statement?.statement?.value) {
           const [, , r] = branch.statement.statement.value;
           retrn = r;
         } else throw "Unexpected return value";
 
         let val;
-        if (branch.match.value) {
+        if (
+          branch.match.type === NodeType.IDENTIFIER &&
+          branch.match.value) {
           const { value } = branch.match;
           val = value;
-        } else if (branch.match.branch.value) {
+        } else if (
+          branch.match.type === NodeType.MATCH &&
+          branch.match.branch.value) {
           const { value } = branch.match.branch;
           val = value;
         } else throw "Unexpected match value";
