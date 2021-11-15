@@ -10,6 +10,8 @@ export enum NodeType {
   COMPARATOR = "COMPARATOR",
   TUPLE = "TUPLE",
   BRANCH = "BRANCH",
+  CASE = "CASE",
+  MATCH = "MATCH",
   SCOPE = "SCOPE",
   RECORD = "RECORD",
   DECLARATION = "DECLARATION",
@@ -102,14 +104,21 @@ export type TupleNode = {
   value: [AstNode, AstNode, AstNode?];
 };
 
+export type CaseNode = {
+  type: NodeType.CASE;
+  condition: IdentifierNode;
+  branches: BranchNode[];
+};
+
 export type Match = {
+  type: NodeType.MATCH;
   branch: IdentifierNode;
   param: Match | IdentifierNode;
 };
 
 export type BranchNode = {
   type: NodeType.BRANCH;
-  match: Match;
+  match: Match | IdentifierNode;
   statement: AstNode;
 };
 
@@ -135,7 +144,7 @@ export type RecordNode = {
   value: RecordItem[];
 };
 
-export type _Declaration = {
+type _Declaration = {
   function: IdentifierNode;
   parameters: AstNode[];
 };
@@ -167,6 +176,7 @@ export type AstNode =
   | ProductNode
   | ExpoentNode
   | LiteralNode
+  | CaseNode
   | ComparatorNode
   | TupleNode
   | BranchNode

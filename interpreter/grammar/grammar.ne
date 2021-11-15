@@ -147,7 +147,7 @@ CASE_OF_BRANCH -> __ (CASE_OF_MATCH | "_") __ "->" __ S_STATEMENT (__ "\\n" | nu
 
 CASE_OF_MATCH -> ID_UNWRAPPED __ CASE_OF_MATCH
 
-		{% ([fun, _1, param]) => { return { branch: fun, param } } %}
+		{% ([fun, _1, param]) => { return { type: "MATCH", branch: fun, param } } %}
 
 	| "(" TUPLE ")"
 
