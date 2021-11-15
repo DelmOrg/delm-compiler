@@ -156,7 +156,7 @@ export function lexer(lines: string[]): [string[], Token[], string[][]] {
       !alias &&
       lexedLine.includes(":") &&
       (!lexedLine.match(/\"/g))
-      ) {
+    ) {
       signatures.push(lexedLine.split(" "));
       continue;
     }
