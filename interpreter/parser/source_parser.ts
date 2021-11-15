@@ -75,12 +75,12 @@ function runParser(parser: Parser, tokens: string): AstNode {
   return tree as AstNode;
 }
 
-export function parser(source: string): AstNode[] {
+export function parser(source: string): [AstNode[], string[][]] {
   const lines = source.split("\n");
 
   const segment: string[] = lines;
 
-  const [stringTable, tokens] = lexer(segment);
+  const [stringTable, tokens, signatures] = lexer(segment);
   // TODO replace these back
   // console.log("string table: ", "|" + stringTable.join("|") + "|");
 
@@ -124,5 +124,5 @@ export function parser(source: string): AstNode[] {
     }
   }
 
-  return treeList;
+  return [treeList, signatures];
 }

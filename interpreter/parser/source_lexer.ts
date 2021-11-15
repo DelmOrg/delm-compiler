@@ -71,8 +71,16 @@ const ignore = [
   "",
 ];
 
-export function lexer(lines: string[]): [string[], Token[]] {
+/**
+ * Lexer for the source language.
+ *
+ * @param source Source code to lex.
+ * @returns A Tuple: (String Table, Tokens, Signatures)
+ *
+*/
+export function lexer(lines: string[]): [string[], Token[], string[][]] {
   const stringTable: string[] = [];
+  const signatures: string[][] = [];
 
   const tokens: Token[] = [];
   let inMultilineComment = 0,
@@ -148,7 +156,8 @@ export function lexer(lines: string[]): [string[], Token[]] {
       !alias &&
       lexedLine.includes(":") &&
       (!lexedLine.match(/\"/g))
-    ) {
+      ) {
+      signatures.push(lexedLine.split(" "));
       continue;
     }
 
@@ -390,5 +399,5 @@ export function lexer(lines: string[]): [string[], Token[]] {
     symbol: "\\n\\n",
   });
 
-  return [stringTable, tokens];
+  return [stringTable, tokens, signatures];
 }

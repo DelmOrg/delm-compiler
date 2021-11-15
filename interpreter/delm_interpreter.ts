@@ -1,6 +1,6 @@
 import { parser } from "./parser/source_parser.ts";
-
 import { NodeType } from "./parser/types.ts";
+import { extractUpdate } from "./ast/extractors.ts";
 
 const command = Deno.args[0];
 const filename = Deno.args[1];
@@ -14,50 +14,13 @@ packageName = packageName.split(".")[0];
 
 const run = async () => {
   const source = await Deno.readTextFile(`./src/${packageName}/${filename}`);
-  const treeList = parser(source);
+  const [treeList, sourceSignatures] = parser(source);
+  const [updateFunctionName, signatureType] = extractUpdate(treeList, sourceSignatures);
 
   // console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
   //   JSON.stringify(treeList, null, 2));
 
   console.log("[META] output AST");
-
-  let updateFunctionName = "", totalTypes = 0, signatureType;
-  for (let i = 0; i < treeList.length; i++) {
-    const tree = treeList[i];
-    if (
-      tree.type === NodeType.DECLARATION &&
-      tree.left?.function?.type === NodeType.IDENTIFIER &&
-      tree.left?.function?.value === "main"
-    ) {
-      // const [, { value }] = tree?.right?.right?.right;
-      // updateFunctionName = value;
-      let ast = tree?.right;
-      if (ast?.type === NodeType.FUNCTION_CALL && !Array.isArray(ast?.right)) {
-        ast = ast?.right;
-        if (
-          ast.type === NodeType.FUNCTION_CALL &&
-          Array.isArray(ast?.right) &&
-          ast.right[1]?.type === NodeType.IDENTIFIER
-        ) {
-          const [, { value }] = ast.right;
-          updateFunctionName = value;
-        }
-      }
-    }
-
-    if (tree.type === NodeType.TYPE_DECLARATION) {
-      totalTypes += 1;
-      signatureType = tree as any; // TODO
-    }
-  }
-  if (!updateFunctionName) {
-    console.log("update function not found");
-    throw "";
-  }
-  if (totalTypes !== 1) {
-    console.log("unsupported type count");
-    throw "";
-  }
 
   const returnMap: any = {};
   for (let i = 0; i < treeList.length; i++) {
