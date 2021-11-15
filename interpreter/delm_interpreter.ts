@@ -5,7 +5,7 @@ import { extractUpdate } from "./ast/extractors.ts";
 const command = Deno.args[0];
 const filename = Deno.args[1];
 
-if (command !== "run") throw new Error(`Unkown command ${command}`)
+if (command !== "run") throw new Error(`Unkown command ${command}`);
 
 if (!filename) throw new Error("No filename provided");
 
@@ -15,7 +15,10 @@ packageName = packageName.split(".")[0];
 const run = async () => {
   const source = await Deno.readTextFile(`./src/${packageName}/${filename}`);
   const [treeList, sourceSignatures] = parser(source);
-  const [updateFunctionName, signatureType] = extractUpdate(treeList, sourceSignatures);
+  const [updateFunctionName, signatureType] = extractUpdate(
+    treeList,
+    sourceSignatures,
+  );
 
   // console.log("🚀 ~ file: delm_interpreter.ts ~ line 92 ~ run ~ treeList",
   //   JSON.stringify(treeList, null, 2));

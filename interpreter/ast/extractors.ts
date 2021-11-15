@@ -1,8 +1,15 @@
-import { AstNode, SpecialValues, TypeDeclarationNode } from "../parser/types.ts";
+import {
+  AstNode,
+  SpecialValues,
+  TypeDeclarationNode,
+} from "../parser/types.ts";
 import { NodeType } from "../parser/types.ts";
 
-export function extractUpdate(treeList: AstNode[], signatures: string[][]): [string, TypeDeclarationNode] {
-	const typeMap: Record<string, TypeDeclarationNode> = {};
+export function extractUpdate(
+  treeList: AstNode[],
+  signatures: string[][],
+): [string, TypeDeclarationNode] {
+  const typeMap: Record<string, TypeDeclarationNode> = {};
   let updateFunctionName = "", signatureType;
 
   for (let i = 0; i < treeList.length; i++) {
@@ -27,17 +34,17 @@ export function extractUpdate(treeList: AstNode[], signatures: string[][]): [str
     }
 
     if (tree.type === NodeType.TYPE_DECLARATION) {
-			typeMap[tree.left.value] = tree;
+      typeMap[tree.left.value] = tree;
     }
   }
 
-	for (const signature of signatures) {
+  for (const signature of signatures) {
     const [functionName, , msgTypeName] = signature;
 
     if (functionName === updateFunctionName) {
       signatureType = typeMap[msgTypeName];
     }
-	}
+  }
 
   if (!updateFunctionName) {
     console.log("update function not found");
